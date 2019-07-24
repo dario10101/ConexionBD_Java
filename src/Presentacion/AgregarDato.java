@@ -135,9 +135,14 @@ public class AgregarDato extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         atrFrmPrincipal.mostrarDatosTabla(atrTabla);        
         try{
-            insertarDato();
-            JOptionPane.showMessageDialog(this, "Dato agregado correctamente");
-            atrFrmPrincipal.mostrarDatosTabla(atrTabla);
+            boolean res = insertarDato();
+            if(res){
+                JOptionPane.showMessageDialog(this, "Dato agregado correctamente");
+                atrFrmPrincipal.mostrarDatosTabla(atrTabla);
+            }else{
+                JOptionPane.showMessageDialog(this, "Datos incorrectos");
+            }
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Error al insertar: " + e.getMessage());
         }  

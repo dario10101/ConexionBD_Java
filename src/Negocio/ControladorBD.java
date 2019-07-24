@@ -62,7 +62,8 @@ public class ControladorBD {
         System.out.println(sentencia);
         
         try{
-            return atrAcceso.ejecutar(sentencia);
+            boolean res =  atrAcceso.ejecutar(sentencia);
+            return res;
         }catch(Exception e){
             System.out.println("Error: " + e.getMessage());
             return false;
@@ -80,7 +81,9 @@ public class ControladorBD {
         System.out.println(sentencia);
         
         try{
-            return atrAcceso.ejecutar(sentencia);
+            boolean res = atrAcceso.ejecutar(sentencia);
+            System.out.println(res);
+            return res;
         }catch(Exception e){
             System.out.println("Error: " + e.getMessage());
             return false;

@@ -13,6 +13,7 @@ public class AgregarTabla extends javax.swing.JFrame {
     private Principal atrFrmP;
     private Vector<String> atrColumnas;
     private ControladorBD atrBDatos;
+    private int atrNumCol = 1;
     
     public AgregarTabla(Principal frmP, ControladorBD bDatos) {
         atrBDatos = bDatos;
@@ -55,7 +56,7 @@ public class AgregarTabla extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre de la tabla:");
 
-        jLabel2.setText("Agregar Columna:");
+        jLabel2.setText("Agregar Columna 1:");
 
         jLabel3.setText("Nombre:");
 
@@ -160,8 +161,11 @@ public class AgregarTabla extends javax.swing.JFrame {
         if(!nombreTabla.equals("")){
             if(atrColumnas.size() > 0){             
                 atrBDatos.crearTabla(atrColumnas,nombreTabla);
+                
                 atrFrmP.mostrarListaTablas();
                 this.dispose();
+                
+                
             }else{
                 JOptionPane.showMessageDialog(this, "Datos insuficientes");
             }
@@ -184,6 +188,10 @@ public class AgregarTabla extends javax.swing.JFrame {
             }
             atrColumnas.add(columna);
             txtNombreCol.setText("");
+            
+            atrNumCol++;
+            jLabel2.setText("Agregar Columna " + atrNumCol + ":");
+            
             //txtTipoDato.setText("");
         }else{
             JOptionPane.showMessageDialog(this, "Llene los campos vacios");

@@ -10,7 +10,10 @@ import javax.swing.table.DefaultTableModel;
 import Negocio.ControladorBD;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTree;
+import javax.swing.SpringLayout;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -46,8 +49,8 @@ public class Principal extends javax.swing.JFrame {
         btnInsertar = new javax.swing.JButton();
         btnCrearTabla = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblresultados = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        treeTablas = new javax.swing.JTree();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -121,22 +124,12 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.setForeground(new java.awt.Color(204, 255, 255));
 
-        tblresultados.setBackground(new java.awt.Color(102, 255, 204));
-        tblresultados.setForeground(new java.awt.Color(51, 153, 0));
-        tblresultados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tblresultados.addMouseListener(new java.awt.event.MouseAdapter() {
+        treeTablas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblresultadosMouseClicked(evt);
+                treeTablasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblresultados);
+        jScrollPane2.setViewportView(treeTablas);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,15 +137,15 @@ public class Principal extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -335,7 +328,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jpanel_editTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -383,15 +376,6 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConectarActionPerformed
 
-    private void tblresultadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblresultadosMouseClicked
-        int seleccion = tblresultados.getSelectedRow();
-        
-        String tabla= String.valueOf(tblresultados.getValueAt(seleccion, 0));
-        
-        mostrarDatosTabla(tabla);
-        mostrarInfoTabla(atrBDatos.metadatosTabla(tabla));       
-    }//GEN-LAST:event_tblresultadosMouseClicked
-
     private void btnCrearTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearTablaActionPerformed
         Principal p = this;
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -402,7 +386,25 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearTablaActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-
+        
+        try{
+            int selection = treeTablas.getSelectionRows()[0] -1;
+            String tabla = raiz.getChildAt(selection).toString();
+            
+            Principal p = this;
+            
+            //-ResultSet rs;
+            //rs = atrBDatos.metadatosTabla(tabla);
+                          
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new AgregarDato(p,atrBDatos,tabla).setVisible(true);
+                }
+            });
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Seleccione una tabla primero");
+        }
+        /*
         int itemTabla = tblresultados.getSelectedRow();
         if(itemTabla >= 0){
             int seleccion = tblresultados.getSelectedRow();
@@ -410,8 +412,8 @@ public class Principal extends javax.swing.JFrame {
             
             Principal p = this;
             
-            ResultSet rs;
-            rs = atrBDatos.metadatosTabla(tabla);
+            //-ResultSet rs;
+            //rs = atrBDatos.metadatosTabla(tabla);
                           
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
@@ -423,8 +425,18 @@ public class Principal extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Seleccione una tabla primero");
         }
+        */
 
     }//GEN-LAST:event_btnInsertarActionPerformed
+
+    private void treeTablasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_treeTablasMouseClicked
+        
+        int value = treeTablas.getSelectionRows()[0] -1;
+        String tabla = raiz.getChildAt(value).toString();
+        
+        mostrarDatosTabla(tabla);
+        mostrarInfoTabla(atrBDatos.metadatosTabla(tabla));
+    }//GEN-LAST:event_treeTablasMouseClicked
     
     public void mostrarDatosTabla(String tabla){
         try{            
@@ -443,8 +455,10 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     public void mostrarListaTablas(){
-        try{            
-            tblresultados.setModel(datosTabla(atrBDatos.tablasExistentes()));                                     
+        
+        try{
+            treeTablas(atrBDatos.tablasExistentes());
+            //tblresultados.setModel(datosTabla(atrBDatos.tablasExistentes()));                                     
            }
         catch(Exception ex){
             JOptionPane.showMessageDialog(this, ex);
@@ -485,7 +499,7 @@ public class Principal extends javax.swing.JFrame {
     private void habilitarOpcionesUsuario(){
         btnCrearTabla.setVisible(true);
         btnDesconectar.setVisible(true);
-        tblresultados.setVisible(true);        
+        treeTablas.setVisible(true);        
         jpanel_editTabla.setVisible(true);
         datotabla.setVisible(true);
         info.setVisible(true);
@@ -495,7 +509,7 @@ public class Principal extends javax.swing.JFrame {
     private void deshabilitarOpcionesUsuario(){
         jpanel_editTabla.setVisible(false);
         btnCrearTabla.setVisible(false);         
-        tblresultados.setVisible(false);
+        treeTablas.setVisible(false);
         datotabla.setVisible(false);
         info.setVisible(false);
         btnDesconectar.setVisible(false);
@@ -550,6 +564,34 @@ public class Principal extends javax.swing.JFrame {
         });
     }
 
+    DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Tablas");
+    DefaultTreeModel modeloRaiz = new DefaultTreeModel(raiz);
+    JTree arbol = new JTree(modeloRaiz);
+    
+    private void treeTablas(ResultSet resulSet)
+    {
+        try
+        {
+            ResultSetMetaData metaData = resulSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            
+            while(resulSet.next())
+            {
+               DefaultMutableTreeNode nodo = new DefaultMutableTreeNode();
+               
+                for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) 
+                {
+                    nodo.setUserObject(resulSet.getObject(columnIndex));
+                }
+                raiz.add(nodo);
+            }
+            treeTablas.setModel(modeloRaiz);
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConectar;
     private javax.swing.JButton btnCrearTabla;
@@ -567,12 +609,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel jpanel_editTabla;
-    private javax.swing.JTable tblresultados;
+    private javax.swing.JTree treeTablas;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtHost;
     private javax.swing.JTextField txtPuerto;

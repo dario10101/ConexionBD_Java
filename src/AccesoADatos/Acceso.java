@@ -21,10 +21,8 @@ public class Acceso {
     public boolean inicializarConexion(String usuario, String host, int port, String pass){
         
         try{
-            atrCadenaConexion = String.format("jdbc:oracle:thin:@%s:%s:xe",host, port);
-            System.out.println("paso 1");
-            atrConexion = DriverManager.getConnection(atrCadenaConexion, usuario, pass);      
-            System.out.println("paso 2");
+            atrCadenaConexion = String.format("jdbc:oracle:thin:@%s:%s:xe",host, port);           
+            atrConexion = DriverManager.getConnection(atrCadenaConexion, usuario, pass);           
             return true;
         }
         catch(Exception ex){
