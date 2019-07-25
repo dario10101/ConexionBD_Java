@@ -48,7 +48,8 @@ public class Acceso {
     public boolean ejecutar(String sentencia){
         try{
             Statement statement = atrConexion.createStatement();
-            return statement.execute(sentencia);       
+            System.out.println(statement.executeQuery(sentencia));
+            return true;//execute(sentencia);       
         }
         catch(Exception ex){
           System.out.println("Error: " + ex.getMessage());          

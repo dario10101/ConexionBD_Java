@@ -159,12 +159,17 @@ public class AgregarTabla extends javax.swing.JFrame {
     private void btnAgregarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTablaActionPerformed
         String nombreTabla = txtNombreTabla.getText();
         if(!nombreTabla.equals("")){
-            if(atrColumnas.size() > 0){             
-                atrBDatos.crearTabla(atrColumnas,nombreTabla);
+            if(atrColumnas.size() > 0){ 
+                if(atrBDatos.crearTabla(atrColumnas,nombreTabla)){
+                    System.out.println("Agregada");
+                }else{
+                    System.out.println("NO se pudo agregar");
+                }
+                
                 
                 atrFrmP.mostrarListaTablas();
-                this.dispose();
-                
+                //atrFrmP.actualizarArbol(nombreTabla);
+                this.dispose();               
                 
             }else{
                 JOptionPane.showMessageDialog(this, "Datos insuficientes");

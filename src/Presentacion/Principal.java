@@ -457,6 +457,9 @@ public class Principal extends javax.swing.JFrame {
     public void mostrarListaTablas(){
         
         try{
+            raiz = new DefaultMutableTreeNode("Tablas");
+            modeloRaiz = new DefaultTreeModel(raiz);
+            arbol = new JTree(modeloRaiz);
             treeTablas(atrBDatos.tablasExistentes());
             //tblresultados.setModel(datosTabla(atrBDatos.tablasExistentes()));                                     
            }
@@ -568,8 +571,7 @@ public class Principal extends javax.swing.JFrame {
     DefaultTreeModel modeloRaiz = new DefaultTreeModel(raiz);
     JTree arbol = new JTree(modeloRaiz);
     
-    private void treeTablas(ResultSet resulSet)
-    {
+    private void treeTablas(ResultSet resulSet){
         try
         {
             ResultSetMetaData metaData = resulSet.getMetaData();
@@ -586,12 +588,19 @@ public class Principal extends javax.swing.JFrame {
                 raiz.add(nodo);
             }
             treeTablas.setModel(modeloRaiz);
+            
         }
         catch(Exception ex)
         {
             JOptionPane.showMessageDialog(this, ex);
         }
     }
+    public void actualizarArbol(String dato){
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode();
+        nodo.setUserObject(dato);
+        treeTablas.updateUI();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConectar;
     private javax.swing.JButton btnCrearTabla;
